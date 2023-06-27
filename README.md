@@ -8,4 +8,4 @@ During the course of this project,
 - Designed & implemented the classes required for a contest framework.
 - Implemented the business logic of running a simulated contest.
 
-  [Entities Diagram](https://directus.crio.do/assets/f9c45cd7-30b6-430b-b4f0-2aa8b31885fe?)
+  [!Entities Diagram](https://directus.crio.do/assets/f9c45cd7-30b6-430b-b4f0-2aa8b31885fe?)
