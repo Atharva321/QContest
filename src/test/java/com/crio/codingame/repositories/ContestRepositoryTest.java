@@ -49,7 +49,6 @@ public class ContestRepositoryTest {
     @DisplayName("save method should create and return new Contest")
     public void saveContest(){
         //Arrange
-        
         final List<Question> questionLow = new ArrayList<Question>(){
             {
                 add(new Question("4", "title4", Level.LOW,10));
@@ -145,5 +144,4 @@ public class ContestRepositoryTest {
         //Assert
         Assertions.assertEquals(expectedCount,actualContests.size());
     }
-    
 }

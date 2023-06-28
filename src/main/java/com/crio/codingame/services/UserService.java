@@ -1,5 +1,7 @@
 package com.crio.codingame.services;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +30,7 @@ public class UserService implements IUserService {
     // Create and store User into the repository.
     @Override
     public User create(String name) {
-     return null;
+     return userRepository.save(new User(null, name, 0));
     }
 
     // TODO: CRIO_TASK_MODULE_SERVICES
@@ -38,7 +40,14 @@ public class UserService implements IUserService {
 
     @Override
     public List<User> getAllUserScoreOrderWise(ScoreOrder scoreOrder){
-     return Collections.emptyList();
+        List<User> users  = userRepository.findAll();
+       if(scoreOrder.equals(ScoreOrder.ASC)){
+           Collections.sort(users, Comparator.comparingInt(User::getScore));
+       }
+       else{
+           Collections.sort(users, (user1, user2) -> user2.getScore() - user1.getScore());
+       }
+       return users;
     }
 
     @Override
@@ -65,7 +74,24 @@ public class UserService implements IUserService {
 
     @Override
     public UserRegistrationDto withdrawContest(String contestId, String userName) throws ContestNotFoundException, UserNotFoundException, InvalidOperationException {
-     return null;
+        Contest contest=contestRepository.findById(contestId).orElseThrow(()-> new ContestNotFoundException("Cannot Withdraw Contest. Contest for given id:"+contestId+" not found!"));
+        User user=userRepository.findByName(userName).orElseThrow(()-> new UserNotFoundException("Cannot Withdraw Contest. User for given name:"+userName+" not found!"));
+        if(contest.getCreator()==user){
+            throw new InvalidOperationException("Cannot Withdraw Contest. Contest Creator:"+userName+ "not allowed to withdraw contest!");
+        }
+        if(!user.checkIfContestExists(contest)){
+            throw new InvalidOperationException("Cannot Withdraw Contest. User for given contest id:"+contestId+" is not registered!");
+        }
+        if(contest.getContestStatus().equals(ContestStatus.IN_PROGRESS)){
+            throw new InvalidOperationException("Cannot Withdraw Contest. Contest for given id:"+contestId+" is in progress!");
+        }
+        if(contest.getContestStatus().equals(ContestStatus.ENDED)){
+            throw new InvalidOperationException("Cannot Withdraw Contest. Contest for given id:"+contestId+" is ended!");
+        }
+        user.deleteContest(contest);
+        userRepository.save(user);
+        UserRegistrationDto userRegistrationDto = new UserRegistrationDto(contest.getName(),user.getName(),RegisterationStatus.NOT_REGISTERED);
+        return userRegistrationDto;
     }
     
 }

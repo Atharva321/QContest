@@ -1,6 +1,7 @@
 package com.crio.codingame.services;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -57,7 +58,8 @@ public class ContestService implements IContestService {
     // Return a specific List of Random Questions as specified by numQuestion.
 
     private List<Question> pickQuestionsList(final List<Question> questions,final Integer numQuestion){
-     return Collections.emptyList();
+        Collections.shuffle(questions);
+        return questions.subList(0, numQuestion);
     }
 
     // TODO: CRIO_TASK_MODULE_SERVICES
@@ -67,7 +69,8 @@ public class ContestService implements IContestService {
 
     @Override
     public List<Contest> getAllContestLevelWise(Level level) {
-     return Collections.emptyList();
+        if(level == null) return contestRepository.findAll();
+        return contestRepository.findAllContestLevelWise(level);
     }
 
     @Override

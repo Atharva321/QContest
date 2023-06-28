@@ -35,7 +35,7 @@ public class ContestRepository implements IContestRepository {
         }
         contestMap.put(entity.getId(),entity);
         return entity;
-    }
+     }
 
     // TODO: CRIO_TASK_MODULE_SERVICES
     // Find all the list of Contest Present in the Repository
@@ -43,7 +43,8 @@ public class ContestRepository implements IContestRepository {
 
     @Override
     public List<Contest> findAll() {
-     return Collections.emptyList();
+        return contestMap.values().stream()
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -81,7 +82,10 @@ public class ContestRepository implements IContestRepository {
 
     @Override
     public List<Contest> findAllContestLevelWise(Level level) {
-     return Collections.emptyList();
+        return contestMap.entrySet().stream()
+                .map(Map.Entry::getValue)
+                .filter(c -> c.getLevel() == level)
+                .collect(Collectors.toList());
     }
 
     

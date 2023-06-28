@@ -15,11 +15,11 @@ public class Question extends BaseEntity {
         this.id = id;
     }
 
-     public Question(String title, Level level, Integer score) {
-         this.title = title;
-         this.level = level;
-         this.score = score;
-     }
+    public Question(String title, Level level, Integer score) {
+        this.title = title;
+        this.level = level;
+        this.score = score;
+    }
 
 
     @Override
