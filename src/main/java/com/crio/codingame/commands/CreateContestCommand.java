@@ -33,7 +33,7 @@ public class CreateContestCommand implements ICommand{
             String contestCreator = tokens.get(3);
             Integer numQuestions = null;
             if (tokens.size() == 5) {
-                numQuestions = Integer.parseInt(tokens.get(5));
+                numQuestions = Integer.parseInt(tokens.get(4));
             }
             Contest contest = contestService.create(contestName, contestLevel, contestCreator, numQuestions);
             System.out.println(contest);

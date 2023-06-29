@@ -28,7 +28,7 @@ public class Contest extends BaseEntity{
              ContestStatus contestStatus) {
          this.name = name;
          validateQuestionList(questions, level);
-         this.questions = new ArrayList<>();
+         this.questions = questions;
          this.level = level;
          this.creator = creator;
          this.contestStatus = contestStatus;

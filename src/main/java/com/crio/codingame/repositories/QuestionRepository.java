@@ -26,6 +26,7 @@ public class QuestionRepository implements IQuestionRepository {
             autoIncrement++;
             Question q = new Question(Integer.toString(autoIncrement),entity.getTitle(),entity.getLevel(),entity.getScore());
             questionMap.put(q.getId(),q);
+            // System.out.println(q);
             return q;
         }
         questionMap.put(entity.getId(),entity);
@@ -78,10 +79,9 @@ public class QuestionRepository implements IQuestionRepository {
 
     @Override
     public List<Question> findAllQuestionLevelWise(Level level) {
-        List<Question> questions = new ArrayList<>();
-        return questionMap.entrySet().stream()
-                .map(Map.Entry::getValue)
+        List<Question> questions = questionMap.values().stream()
                 .filter(q -> q.getLevel() == level)
                 .collect(Collectors.toList());
+        return questions;
     }
 }

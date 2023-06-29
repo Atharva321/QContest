@@ -49,8 +49,8 @@ public class ContestService implements IContestService {
             return contest;
         }
         List<Question> filteredQuestionList = pickQuestionsList(questions, numQuestion);
-        Contest contest = contestRepository.save(new Contest(contestName, filteredQuestionList,level,user,ContestStatus.NOT_STARTED));
-        userService.attendContest(contest.getId(),contestCreator);
+        Contest contest = contestRepository.save(new Contest(contestName, filteredQuestionList, level, user, ContestStatus.NOT_STARTED));
+        userService.attendContest(contest.getId(), contestCreator);
         return contest;
     }
 
